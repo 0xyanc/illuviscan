@@ -1,0 +1,11 @@
+* SLP
+    - amount of ETH and ILV in one SLP
+    - token price
+
+* sILV2
+
+* Circulating supply Graph
+
+* Seed unlocks
+
+*  Staking rewards claims

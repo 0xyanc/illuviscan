@@ -1,0 +1,57 @@
+[
+    {
+        "date": "23/03/2023",
+        "startBlock": 14443469,
+        "endBlock": 14445660
+    },
+    {
+        "date": "24/03/2023",
+        "startBlock": 14445661,
+        "endBlock": 14452084
+    },
+    {
+        "date": "25/03/2023",
+        "startBlock": 14452085,
+        "endBlock": 14458508
+    },
+    {
+        "date": "26/03/2023",
+        "startBlock": 14458509,
+        "endBlock": 14464915
+    },
+    {
+        "date": "27/03/2023",
+        "startBlock": 14464916,
+        "endBlock": 14471310
+    },
+    {
+        "date": "28/03/2023",
+        "startBlock": 14471311,
+        "endBlock": 14477773
+    },
+    {
+        "date": "29/03/2023",
+        "startBlock": 14477774,
+        "endBlock": 14484225
+    },
+    {
+        "date": "30/03/2023",
+        "startBlock": 14484226,
+        "endBlock": 14490619
+    },
+    {
+        "date": "31/03/2023",
+        "startBlock": 14490620,
+        "endBlock": 14497033
+    },
+    {
+        "date": "01/04/2023",
+        "startBlock": 14497034,
+        "endBlock": 14503464
+    },
+    {
+        "date": "02/04/2023",
+        "startBlock": 14503465,
+        "endBlock": 14509821
+    }
+]
