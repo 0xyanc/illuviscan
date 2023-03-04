@@ -5,7 +5,7 @@ import blocksByDay from "../util/blocksByDay.json";
 
 interface IUnlocks {
   date: string;
-  amount: string;
+  amount: number;
 }
 
 interface IUnlocksContext {
@@ -103,7 +103,7 @@ export const UnlocksProvider = ({ children }: { children: ReactNode }) => {
           accumulatedAmount = accumulatedAmount.add(event.args.amount);
         }
       }
-      unlocksByDay.push({ date: day, amount: Number(ethers.utils.formatEther(accumulatedAmount)).toFixed(0) });
+      unlocksByDay.push({ date: day, amount: Number(ethers.utils.formatEther(accumulatedAmount)) });
     }
     setUnlocksByDay(unlocksByDay);
     setIsLoaded(true);

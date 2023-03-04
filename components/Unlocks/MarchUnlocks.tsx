@@ -2,7 +2,7 @@ import { useClaimsProvider } from "@/context/ClaimsContext";
 import { Flex, Heading, Spinner, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { ResponsiveBar } from "@nivo/bar";
 
-const Unlocks = () => {
+const MarchUnlocks = () => {
   const { unlocksByDay, isLoaded } = useClaimsProvider();
   return (
     <>
@@ -32,7 +32,7 @@ const Unlocks = () => {
                 colors="purple"
                 animate={true}
                 enableLabel={true}
-                label={(d) => `${Number(d.value).toLocaleString("en-us")}`}
+                label={(d) => `${Number(d.value).toLocaleString("en-us", { maximumFractionDigits: 0 })}`}
                 labelTextColor="#ffffff"
                 gridXValues={[]}
                 axisTop={null}
@@ -64,7 +64,7 @@ const Unlocks = () => {
                         return (
                           <Tr>
                             <Td>{unlock.date}</Td>
-                            <Td>{Number(unlock.amount).toLocaleString("en-us")}</Td>
+                            <Td>{Number(unlock.amount).toLocaleString("en-us", { maximumFractionDigits: 0 })}</Td>
                           </Tr>
                         );
                       })
@@ -87,4 +87,4 @@ const Unlocks = () => {
   );
 };
 
-export default Unlocks;
+export default MarchUnlocks;

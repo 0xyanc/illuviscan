@@ -6,12 +6,14 @@ import IlvPoolAbiV2 from "../abis/IlvPoolV2.json";
 import SushiPoolAbiV2 from "../abis/SushiPoolV2.json";
 import IlvPoolAbiV1 from "../abis/IlvPoolV1.json";
 import SushiPoolAbiV1 from "../abis/SushiPoolV1.json";
+import VestingAbi from "../abis/Vesting.json";
 
 interface IContractContext {
   readIlvPoolContractV2: Contract | null;
   readSushiPoolContractV2: Contract | null;
   readIlvPoolContractV1: Contract | null;
   readSushiPoolContractV1: Contract | null;
+  vestingContract: Contract | null;
   provider: Provider;
 }
 
@@ -31,6 +33,7 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
   const sushiPoolAddressV2 = process.env.NEXT_PUBLIC_SC_SUSHI_POOL_V2;
   const ilvPoolAddressV1 = process.env.NEXT_PUBLIC_SC_ILV_POOL_V1;
   const sushiPoolAddressV1 = process.env.NEXT_PUBLIC_SC_SUSHI_POOL_V1;
+  const vestingAddress = process.env.NEXT_PUBLIC_SC_VESTING;
 
   let provider = useProvider();
 
@@ -48,17 +51,24 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
     signerOrProvider: provider,
   });
 
-  // init read contract for ilv pool
+  // init read contract for ilv pool V1
   const readIlvPoolContractV1 = useContract({
     address: ilvPoolAddressV1,
     abi: IlvPoolAbiV1,
     signerOrProvider: provider,
   });
 
-  // init read contract for sushi pool
+  // init read contract for sushi pool V1
   const readSushiPoolContractV1 = useContract({
     address: sushiPoolAddressV1,
     abi: SushiPoolAbiV1,
+    signerOrProvider: provider,
+  });
+
+  // init read Vesting contract
+  const vestingContract = useContract({
+    address: vestingAddress,
+    abi: VestingAbi,
     signerOrProvider: provider,
   });
 
@@ -69,6 +79,7 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
         readSushiPoolContractV2,
         readIlvPoolContractV1,
         readSushiPoolContractV1,
+        vestingContract,
         provider,
       }}
     >

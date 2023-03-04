@@ -7,6 +7,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { ContractProvider } from "@/context/ContractContext";
 import { UnlocksProvider } from "@/context/ClaimsContext";
 import Layout from "@/components/Layout/Layout";
+import { SeedProvider } from "@/context/SeedContext";
 
 const alchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_ID ? process.env.NEXT_PUBLIC_ALCHEMY_ID : "";
 const { chains, provider, webSocketProvider } = configureChains(
@@ -26,9 +27,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <ChakraProvider>
         <ContractProvider>
           <UnlocksProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <SeedProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </SeedProvider>
           </UnlocksProvider>
         </ContractProvider>
       </ChakraProvider>
