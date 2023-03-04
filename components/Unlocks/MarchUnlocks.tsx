@@ -23,7 +23,7 @@ const MarchUnlocks = () => {
           <Flex w="100%">
             <Flex h="100%" w="70%">
               <ResponsiveBar
-                data={unlocksByDay}
+                data={unlocksByDay as any[]}
                 indexBy="date"
                 keys={["amount"]}
                 margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
