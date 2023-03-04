@@ -1,5 +1,5 @@
 import { useClaimsProvider } from "@/context/ClaimsContext";
-import { Flex, Heading, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Heading, Spinner, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { ResponsiveBar } from "@nivo/bar";
 
 const Unlocks = () => {
@@ -7,48 +7,79 @@ const Unlocks = () => {
   return (
     <>
       {isLoaded ? (
-        <Flex mt="1rem" minHeight="100vh" w="100%" direction="column">
+        <Flex mt="1rem" w="100%" direction="column">
           <Flex alignItems="center" direction="column">
             <Heading as="h3" size="lg">
               ILV unlocks by day
             </Heading>
             <Text mt="0.5rem" fontSize="md">
-              This data comes from parsing the blockchain after Staking V2 deployment.
+              The data comes from parsing the events{" "}
+              <Text as="b">LogMigratePendingRewards, LogClaimYieldRewards, YieldClaimed</Text> from the Staking
+              contracts (V1 and V2).
               <br />
-              Each non sILV claim and migration from Staking V1 and Staking V2 are added up for each day.
+              Each ILV claim and migration are added up for each day.
             </Text>
           </Flex>
-          <ResponsiveBar
-            data={unlocksByDay}
-            indexBy="date"
-            keys={["amount"]}
-            margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
-            padding={0.2}
-            valueScale={{ type: "linear" }}
-            colors="purple"
-            animate={true}
-            enableLabel={true}
-            // new Intl.NumberFormat('en-us', { maximumSignificantDigits: 3 }).format(d.value)
-            label={(d) => `${d.value} ILV`}
-            labelTextColor="#ffffff"
-            gridXValues={[]}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-            }}
-            axisLeft={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-            }}
-          />
+          <Flex w="100%">
+            <Flex h="100%" w="70%">
+              <ResponsiveBar
+                data={unlocksByDay}
+                indexBy="date"
+                keys={["amount"]}
+                margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
+                padding={0.2}
+                valueScale={{ type: "linear" }}
+                colors="purple"
+                animate={true}
+                enableLabel={true}
+                label={(d) => `${Number(d.value).toLocaleString("en-us")}`}
+                labelTextColor="#ffffff"
+                gridXValues={[]}
+                axisTop={null}
+                axisRight={null}
+                axisBottom={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: 0,
+                }}
+                axisLeft={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: 0,
+                }}
+              />
+            </Flex>
+            <Flex h="100%" w="30%">
+              <TableContainer mt="1rem">
+                <Table>
+                  <Thead>
+                    <Tr>
+                      <Th>Date</Th>
+                      <Th isNumeric>Amount</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {unlocksByDay?.length !== 0 ? (
+                      unlocksByDay?.map((unlock) => {
+                        return (
+                          <Tr>
+                            <Td>{unlock.date}</Td>
+                            <Td>{Number(unlock.amount).toLocaleString("en-us")}</Td>
+                          </Tr>
+                        );
+                      })
+                    ) : (
+                      <></>
+                    )}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            </Flex>
+          </Flex>
         </Flex>
       ) : (
-        <Flex direction="column" alignItems="center" w="100%" justifyContent="center" minHeight="100vh">
-          <Text>Loading blockchain data</Text>
+        <Flex direction="column" alignItems="center" w="100%" justifyContent="center">
+          <Text as="b">Loading blockchain data</Text>
           <Spinner mt="1rem" color="purple" size="xl" />
         </Flex>
       )}
