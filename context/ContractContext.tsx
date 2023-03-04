@@ -1,5 +1,3 @@
-import { Provider } from "@wagmi/core";
-import { Contract } from "ethers";
 import { createContext, ReactNode, useContext } from "react";
 import { useContract, useProvider } from "wagmi";
 import IlvPoolAbiV2 from "../abis/IlvPoolV2.json";
@@ -7,15 +5,7 @@ import SushiPoolAbiV2 from "../abis/SushiPoolV2.json";
 import IlvPoolAbiV1 from "../abis/IlvPoolV1.json";
 import SushiPoolAbiV1 from "../abis/SushiPoolV1.json";
 import VestingAbi from "../abis/Vesting.json";
-
-interface IContractContext {
-  readIlvPoolContractV2: Contract | null;
-  readSushiPoolContractV2: Contract | null;
-  readIlvPoolContractV1: Contract | null;
-  readSushiPoolContractV1: Contract | null;
-  vestingContract: Contract | null;
-  provider: Provider;
-}
+import { IContractContext } from "@/types";
 
 const ContractContext = createContext<IContractContext | null>(null);
 

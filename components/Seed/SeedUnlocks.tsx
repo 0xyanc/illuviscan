@@ -1,5 +1,8 @@
+import { useContractProvider } from "@/context/ContractContext";
 import { useSeedProvider } from "@/context/SeedContext";
+import { ISeedUnlocks } from "@/types";
 import {
+  Button,
   Divider,
   Flex,
   Heading,
@@ -14,10 +17,30 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import addressComments from "../../util/addressComments.json";
 
 const SeedUnlocks = () => {
-  const { unlocksByAddress, totalSeedTokens, totalUnlocked, isLoaded } = useSeedProvider();
+  const { provider } = useContractProvider();
+  const { unlocksByAddress, totalSeedTokens, totalUnlocked, isLoaded, setUnlocksByAddress } = useSeedProvider();
+  const [fetchingEns, setFetchingEns] = useState(false);
+
+  const fetchEns = async () => {
+    setFetchingEns(true);
+    let unlocksByAddressCopy: ISeedUnlocks[] = [];
+
+    await Promise.all(
+      unlocksByAddress.map(async (unlock) => {
+        const ens = await provider.lookupAddress(unlock.address);
+        unlock.ens = ens ? ens : "";
+        unlocksByAddressCopy.push(unlock);
+      })
+    );
+
+    unlocksByAddressCopy.sort((a, b) => b.totalAmount - a.totalAmount);
+    setUnlocksByAddress(unlocksByAddressCopy);
+    setFetchingEns(false);
+  };
   return (
     <>
       {isLoaded ? (
@@ -34,7 +57,10 @@ const SeedUnlocks = () => {
               / {totalSeedTokens.toLocaleString("en-us", { maximumFractionDigits: 0 })}
             </Text>
           </Flex>
-          <Divider mt="1rem" />
+          <Divider mt="1rem" mb="1rem" />
+          <Button onClick={() => fetchEns()} {...(fetchingEns && { isLoading: true })}>
+            Fetch ENS Names
+          </Button>
           <Flex h="100%" w="100%">
             <TableContainer mt="1rem">
               <Table>

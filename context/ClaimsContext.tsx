@@ -2,16 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { useContractProvider } from "./ContractContext";
 import { BigNumber, ethers } from "ethers";
 import blocksByDay from "../util/blocksByDay.json";
-
-interface IUnlocks {
-  date: string;
-  amount: number;
-}
-
-interface IUnlocksContext {
-  unlocksByDay: IUnlocks[] | null;
-  isLoaded: boolean;
-}
+import { IUnlocks, IUnlocksContext } from "@/types";
 
 const UnlocksContext = createContext<IUnlocksContext | null>(null);
 
@@ -103,7 +94,7 @@ export const UnlocksProvider = ({ children }: { children: ReactNode }) => {
           accumulatedAmount = accumulatedAmount.add(event.args.amount);
         }
       }
-      unlocksByDay.push({ date: day, amount: Number(ethers.utils.formatEther(accumulatedAmount)) });
+      unlocksByDay.push({ date: day, amount: Number(ethers.utils.formatEther(accumulatedAmount)) } as IUnlocks);
     }
     setUnlocksByDay(unlocksByDay);
     setIsLoaded(true);

@@ -1,23 +1,9 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { useContractProvider } from "./ContractContext";
 import { BigNumber, ethers } from "ethers";
+import { ISeedContext, ISeedUnlocks } from "@/types";
 
-interface IUnlocks {
-  address: string;
-  ens: string;
-  totalAmount: number;
-  unlocked: number;
-  available: number;
-}
-
-interface IUnlocksContext {
-  unlocksByAddress: IUnlocks[] | null;
-  totalSeedTokens: number;
-  totalUnlocked: number;
-  isLoaded: boolean;
-}
-
-const SeedContext = createContext<IUnlocksContext | null>(null);
+const SeedContext = createContext<ISeedContext | null>(null);
 
 export function useSeedProvider() {
   const context = useContext(SeedContext);
@@ -29,8 +15,8 @@ export function useSeedProvider() {
 }
 
 export const SeedProvider = ({ children }: { children: ReactNode }) => {
-  const { vestingContract, provider } = useContractProvider();
-  const [unlocksByAddress, setUnlocksByAddress] = useState<IUnlocks[] | null>(null);
+  const { vestingContract } = useContractProvider();
+  const [unlocksByAddress, setUnlocksByAddress] = useState<ISeedUnlocks[]>([]);
   const [totalSeedTokens, setTotalSeedTokens] = useState(0);
   const [totalUnlocked, setTotalUnlocked] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -46,7 +32,7 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
     if (vestingContract === null) return;
 
     const tokenIdTracker: BigNumber = await vestingContract.tokenIdTracker();
-    let unlocksByAccount: IUnlocks[] = [];
+    let unlocksByAccount: ISeedUnlocks[] = [];
     let totalUnlocked = BigNumber.from("0");
     let totalSeedTokens = BigNumber.from("0");
 
@@ -62,10 +48,9 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
         totalUnlocked = totalUnlocked.add(unlocked);
         const totalAmount = balance.add(unlocked);
         totalSeedTokens = totalSeedTokens.add(totalAmount);
-        var ens = await provider.lookupAddress(owner);
         unlocksByAccount.push({
           address: owner,
-          ens: ens ? ens : "",
+          ens: "",
           totalAmount: Number(ethers.utils.formatEther(totalAmount)),
           unlocked: Number(ethers.utils.formatEther(unlocked)),
           available: Number(ethers.utils.formatEther(availableUnderlyingFor)),
@@ -89,6 +74,7 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
         totalSeedTokens,
         totalUnlocked,
         isLoaded,
+        setUnlocksByAddress,
       }}
     >
       {children}
