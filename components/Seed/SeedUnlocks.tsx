@@ -17,6 +17,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { ethers } from "ethers";
 import { useState } from "react";
 import addressComments from "../../util/addressComments.json";
 
@@ -76,8 +77,9 @@ const SeedUnlocks = () => {
                   <Th>Address</Th>
                   <Th isNumeric>Total Amount</Th>
                   <Th isNumeric>Already Unlocked</Th>
-                  <Th isNumeric>% Unlock</Th>
+                  <Th isNumeric>% Unlocked</Th>
                   <Th isNumeric>Available to Unlock</Th>
+                  <Th isNumeric>% Unlockable</Th>
                   <Th>Comment</Th>
                 </Tr>
               </Thead>
@@ -101,9 +103,21 @@ const SeedUnlocks = () => {
                         </Td>
                         <Td>{Number(unlock.available).toLocaleString("en-us", { maximumFractionDigits: 0 })}</Td>
                         <Td>
-                          {addressComments[unlock.address as keyof typeof addressComments]
-                            ? addressComments[unlock.address as keyof typeof addressComments]?.comment
-                            : "-"}
+                          {new Intl.NumberFormat("en-us", { style: "percent" }).format(
+                            (unlock.available + unlock.unlocked) / unlock.totalAmount
+                          )}
+                        </Td>
+                        <Td>
+                          {
+                            // add tagged comment for address if exists
+                            addressComments[unlock.address as keyof typeof addressComments]
+                              ? addressComments[unlock.address as keyof typeof addressComments]?.comment
+                              : // Otherwise duration of 3 years for upper management (365*3 + 1 days)
+                              unlock.duration.toString() === "94694400"
+                              ? "Upper Management"
+                              : // Otherwise blank
+                                "-"
+                          }
                         </Td>
                       </Tr>
                     );

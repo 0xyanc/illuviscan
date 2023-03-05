@@ -48,12 +48,14 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
         totalUnlocked = totalUnlocked.add(unlocked);
         const totalAmount = balance.add(unlocked);
         totalSeedTokens = totalSeedTokens.add(totalAmount);
+        const duration = position.end.sub(position.start);
         unlocksByAccount.push({
           address: owner,
           ens: "",
           totalAmount: Number(ethers.utils.formatEther(totalAmount)),
           unlocked: Number(ethers.utils.formatEther(unlocked)),
           available: Number(ethers.utils.formatEther(availableUnderlyingFor)),
+          duration: duration,
         });
         unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);
         setTotalUnlocked(Number(ethers.utils.formatEther(totalUnlocked)));

@@ -1,5 +1,5 @@
 import { Provider } from "@wagmi/core";
-import { Contract } from "ethers";
+import { BigNumber, Contract } from "ethers";
 import { Dispatch, SetStateAction } from "react";
 
 export interface IContractContext {
@@ -17,6 +17,8 @@ export interface ISeedUnlocks {
   totalAmount: number;
   unlocked: number;
   available: number;
+  upperManagement: boolean;
+  // duration: BigNumber;
 }
 
 export interface ISeedContext {
