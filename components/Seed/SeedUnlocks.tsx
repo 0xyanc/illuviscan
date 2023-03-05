@@ -26,6 +26,7 @@ const SeedUnlocks = () => {
   const { unlocksByAddress, totalSeedTokens, totalUnlocked, totalAvailable, isLoaded, setUnlocksByAddress } =
     useSeedProvider();
   const [fetchingEns, setFetchingEns] = useState(false);
+  const [ensFetched, setEnsFetched] = useState(false);
 
   const fetchEns = async () => {
     setFetchingEns(true);
@@ -42,6 +43,7 @@ const SeedUnlocks = () => {
     unlocksByAddressCopy.sort((a, b) => b.totalAmount - a.totalAmount);
     setUnlocksByAddress(unlocksByAddressCopy);
     setFetchingEns(false);
+    setEnsFetched(true);
   };
   return (
     <>
@@ -77,11 +79,12 @@ const SeedUnlocks = () => {
             <Spinner mt="1rem" color="purple" size="xl" />
           </Flex>
         ) : (
-          <></>
+          !ensFetched && (
+            <Button onClick={() => fetchEns()} {...(fetchingEns && { isLoading: true })}>
+              Fetch ENS Names
+            </Button>
+          )
         )}
-        {/* <Button onClick={() => fetchEns()} {...(fetchingEns && { isLoading: true })}>
-            Fetch ENS Names
-          </Button> */}
         <Flex h="100%" w="100%">
           <TableContainer mt="1rem">
             <Table>
