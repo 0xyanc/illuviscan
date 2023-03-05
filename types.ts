@@ -24,6 +24,7 @@ export interface ISeedContext {
   unlocksByAddress: ISeedUnlocks[];
   totalSeedTokens: number;
   totalUnlocked: number;
+  totalAvailable: number;
   isLoaded: boolean;
   setUnlocksByAddress: Dispatch<SetStateAction<ISeedUnlocks[]>>;
 }

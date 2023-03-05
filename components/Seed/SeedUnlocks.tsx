@@ -23,7 +23,8 @@ import addressComments from "../../util/addressComments.json";
 
 const SeedUnlocks = () => {
   const { provider } = useContractProvider();
-  const { unlocksByAddress, totalSeedTokens, totalUnlocked, isLoaded, setUnlocksByAddress } = useSeedProvider();
+  const { unlocksByAddress, totalSeedTokens, totalUnlocked, totalAvailable, isLoaded, setUnlocksByAddress } =
+    useSeedProvider();
   const [fetchingEns, setFetchingEns] = useState(false);
 
   const fetchEns = async () => {
@@ -53,8 +54,20 @@ const SeedUnlocks = () => {
             The data comes from querying the Vesting contract for the existing positions and their current state.
           </Text>
           <Text>
-            <Text as="u">Token Unlocked:</Text> {totalUnlocked.toLocaleString("en-us", { maximumFractionDigits: 0 })} /{" "}
+            <Text as="u">ILV Unlocked:</Text> {totalUnlocked.toLocaleString("en-us", { maximumFractionDigits: 0 })} /{" "}
             {totalSeedTokens.toLocaleString("en-us", { maximumFractionDigits: 0 })}
+          </Text>
+          <Text>
+            <Text as="u">ILV Unlockable:</Text>{" "}
+            {Number(totalUnlocked + totalAvailable).toLocaleString("en-us", { maximumFractionDigits: 0 })} /{" "}
+            {totalSeedTokens.toLocaleString("en-us", { maximumFractionDigits: 0 })}
+          </Text>
+          <Text>
+            <Text as="u">Vesting ILV Left:</Text>{" "}
+            {Number(totalSeedTokens - totalUnlocked - totalAvailable).toLocaleString("en-us", {
+              maximumFractionDigits: 0,
+            })}{" "}
+            / {totalSeedTokens.toLocaleString("en-us", { maximumFractionDigits: 0 })}
           </Text>
         </Flex>
         <Divider mt="1rem" mb="1rem" />

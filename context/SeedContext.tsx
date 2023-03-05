@@ -19,6 +19,7 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
   const [unlocksByAddress, setUnlocksByAddress] = useState<ISeedUnlocks[]>([]);
   const [totalSeedTokens, setTotalSeedTokens] = useState(0);
   const [totalUnlocked, setTotalUnlocked] = useState(0);
+  const [totalAvailable, setTotalAvailable] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
     let unlocksByAccount: ISeedUnlocks[] = [];
     let totalUnlocked = BigNumber.from("0");
     let totalSeedTokens = BigNumber.from("0");
+    let totalAvailable = BigNumber.from("0");
 
     for (let i = 1; i <= tokenIdTracker.toNumber(); i++) {
       try {
@@ -48,6 +50,7 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
         totalUnlocked = totalUnlocked.add(unlocked);
         const totalAmount = balance.add(unlocked);
         totalSeedTokens = totalSeedTokens.add(totalAmount);
+        totalAvailable = totalAvailable.add(availableUnderlyingFor);
         const duration = position.end.sub(position.start);
         unlocksByAccount.push({
           address: owner,
@@ -60,16 +63,12 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
         unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);
         setTotalUnlocked(Number(ethers.utils.formatEther(totalUnlocked)));
         setTotalSeedTokens(Number(ethers.utils.formatEther(totalSeedTokens)));
+        setTotalAvailable(Number(ethers.utils.formatEther(totalAvailable)));
         setUnlocksByAddress(unlocksByAccount);
       } catch (e) {
         console.debug(`Skip Vesting position ${i}`);
       }
     }
-
-    // unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);
-    // setTotalUnlocked(Number(ethers.utils.formatEther(totalUnlocked)));
-    // setTotalSeedTokens(Number(ethers.utils.formatEther(totalSeedTokens)));
-    // setUnlocksByAddress(unlocksByAccount);
     setIsLoaded(true);
   };
 
@@ -79,6 +78,7 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
         unlocksByAddress,
         totalSeedTokens,
         totalUnlocked,
+        totalAvailable,
         isLoaded,
         setUnlocksByAddress,
       }}
