@@ -55,15 +55,19 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
           unlocked: Number(ethers.utils.formatEther(unlocked)),
           available: Number(ethers.utils.formatEther(availableUnderlyingFor)),
         });
+        unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);
+        setTotalUnlocked(Number(ethers.utils.formatEther(totalUnlocked)));
+        setTotalSeedTokens(Number(ethers.utils.formatEther(totalSeedTokens)));
+        setUnlocksByAddress(unlocksByAccount);
       } catch (e) {
         console.debug(`Skip Vesting position ${i}`);
       }
     }
 
-    unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);
-    setTotalUnlocked(Number(ethers.utils.formatEther(totalUnlocked)));
-    setTotalSeedTokens(Number(ethers.utils.formatEther(totalSeedTokens)));
-    setUnlocksByAddress(unlocksByAccount);
+    // unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);
+    // setTotalUnlocked(Number(ethers.utils.formatEther(totalUnlocked)));
+    // setTotalSeedTokens(Number(ethers.utils.formatEther(totalSeedTokens)));
+    // setUnlocksByAddress(unlocksByAccount);
     setIsLoaded(true);
   };
 
