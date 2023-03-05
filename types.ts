@@ -17,8 +17,7 @@ export interface ISeedUnlocks {
   totalAmount: number;
   unlocked: number;
   available: number;
-  upperManagement: boolean;
-  // duration: BigNumber;
+  duration: BigNumber;
 }
 
 export interface ISeedContext {
