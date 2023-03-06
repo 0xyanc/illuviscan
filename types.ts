@@ -8,6 +8,10 @@ export interface IContractContext {
   readIlvPoolContractV1: Contract | null;
   readSushiPoolContractV1: Contract | null;
   vestingContract: Contract | null;
+  sILV2Contract: Contract | null;
+  ethUsdPriceFeedContract: Contract | null;
+  ilvEthPriceFeedContract: Contract | null;
+  quoterContract: Contract | null;
   provider: Provider;
 }
 
@@ -37,4 +41,10 @@ export interface IUnlocks {
 export interface IUnlocksContext {
   unlocksByDay: IUnlocks[] | null;
   isLoaded: boolean;
+}
+
+export interface IPriceContext {
+  ethUsdPrice: number;
+  ilvEthPrice: number;
+  silv2EthPrice: number;
 }

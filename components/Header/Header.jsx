@@ -11,6 +11,9 @@ const Header = () => {
       <Link as={NextLink} href="/seed">
         Seed Unlocks
       </Link>
+      <Link as={NextLink} href="/silv2">
+        sILV2
+      </Link>
     </Flex>
   );
 };

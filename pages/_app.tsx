@@ -8,6 +8,7 @@ import { ContractProvider } from "@/context/ContractContext";
 import { UnlocksProvider } from "@/context/ClaimsContext";
 import Layout from "@/components/Layout/Layout";
 import { SeedProvider } from "@/context/SeedContext";
+import { PriceProvider } from "@/context/PriceContext";
 
 const alchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_ID ? process.env.NEXT_PUBLIC_ALCHEMY_ID : "";
 const { chains, provider, webSocketProvider } = configureChains(
@@ -28,9 +29,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <ContractProvider>
           <UnlocksProvider>
             <SeedProvider>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <PriceProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </PriceProvider>
             </SeedProvider>
           </UnlocksProvider>
         </ContractProvider>
