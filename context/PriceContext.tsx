@@ -43,7 +43,6 @@ export const PriceProvider = ({ children }: { children: ReactNode }) => {
     const roundData = await ethUsdPriceFeedContract.latestRoundData();
     const ethUsdPrice = Number(ethers.utils.formatUnits(roundData.answer, 8));
     setEthUsdPrice(ethUsdPrice);
-    console.log(ethUsdPrice);
   };
 
   const getIlvEthPrice = async () => {
@@ -51,7 +50,6 @@ export const PriceProvider = ({ children }: { children: ReactNode }) => {
     const roundData = await ilvEthPriceFeedContract.latestRoundData();
     const ilvEthPrice = Number(ethers.utils.formatUnits(roundData.answer, 18));
     setIlvEthPrice(ilvEthPrice);
-    console.log(ilvEthPrice);
   };
 
   const getSilv2EthPrice = async () => {
@@ -64,7 +62,6 @@ export const PriceProvider = ({ children }: { children: ReactNode }) => {
       0
     );
     setSilv2EthPrice(Number(ethers.utils.formatEther(quotedAmountOut)));
-    console.log(ethers.utils.formatEther(quotedAmountOut));
   };
 
   return <PriceContext.Provider value={{ ethUsdPrice, ilvEthPrice, silv2EthPrice }}>{children}</PriceContext.Provider>;
