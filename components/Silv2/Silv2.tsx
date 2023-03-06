@@ -1,6 +1,6 @@
 import { useContractProvider } from "@/context/ContractContext";
 import { usePriceProvider } from "@/context/PriceContext";
-import { Flex, Heading, Table, TableContainer, Tbody, Td, Text, Tr } from "@chakra-ui/react";
+import { Flex, Heading, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { BigNumber, ethers } from "ethers";
 import { useEffect, useState } from "react";
 
@@ -56,9 +56,15 @@ const Silv2 = () => {
           The data comes from querying Chainlink, Uniswap and the sILV2 contract.
         </Text>
       </Flex>
-      <Flex justifyContent="center">
-        <TableContainer mt="1rem">
+      <Flex justifyContent="space-evenly">
+        <TableContainer mt="1rem" mr="1rem">
           <Table variant="striped" colorScheme="purple">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th isNumeric>Value</Th>
+              </Tr>
+            </Thead>
             <Tbody>
               <Tr>
                 <Td>Circulating supply</Td>
@@ -112,6 +118,40 @@ const Silv2 = () => {
                   <Text>sILV2 bridged to IMX</Text>
                 </Td>
                 <Td>{bridgedSilv2.toLocaleString("en-us", { maximumFractionDigits: 0 })} sILV2</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+        <TableContainer mt="1rem">
+          <Table variant="striped" colorScheme="purple">
+            <TableCaption>Illuvium Beyond D1sk pricing</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Disk</Th>
+                <Th isNumeric>Price in ETH</Th>
+                <Th isNumeric>Price in sILV2</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>Alpha Mega Disk</Td>
+                <Td>{Number(0.125).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
+                <Td>{Number(0.125 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+              </Tr>
+              <Tr>
+                <Td>Alpha Standard Disk</Td>
+                <Td>{Number(0.025).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
+                <Td>{Number(0.025 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+              </Tr>
+              <Tr>
+                <Td>Mega Disk</Td>
+                <Td>{Number(0.025).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
+                <Td>{Number(0.025 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+              </Tr>
+              <Tr>
+                <Td>Standard Disk</Td>
+                <Td>{Number(0.005).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
+                <Td>{Number(0.005 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
               </Tr>
             </Tbody>
           </Table>
