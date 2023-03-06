@@ -134,22 +134,22 @@ const Silv2 = () => {
             </Thead>
             <Tbody>
               <Tr>
-                <Td>Alpha Mega Disk</Td>
+                <Td>Alpha Mega D1sk</Td>
                 <Td>{Number(0.125).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
                 <Td>{Number(0.125 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
               </Tr>
               <Tr>
-                <Td>Alpha Standard Disk</Td>
+                <Td>Alpha Standard D1sk</Td>
                 <Td>{Number(0.025).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
                 <Td>{Number(0.025 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
               </Tr>
               <Tr>
-                <Td>Mega Disk</Td>
+                <Td>Mega D1sk</Td>
                 <Td>{Number(0.025).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
                 <Td>{Number(0.025 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
               </Tr>
               <Tr>
-                <Td>Standard Disk</Td>
+                <Td>Standard D1sk</Td>
                 <Td>{Number(0.005).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
                 <Td>{Number(0.005 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
               </Tr>
