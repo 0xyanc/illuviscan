@@ -12,6 +12,8 @@ export interface IContractContext {
   ethUsdPriceFeedContract: Contract | null;
   ilvEthPriceFeedContract: Contract | null;
   quoterContract: Contract | null;
+  sushiswapContract: Contract | null;
+  poolFactoryContract: Contract | null;
   provider: Provider;
 }
 
@@ -47,4 +49,8 @@ export interface IPriceContext {
   ethUsdPrice: number;
   ilvEthPrice: number;
   silv2EthPrice: number;
+  reserveIlv: number;
+  reserveWeth: number;
+  slpTotalSupply: number;
+  ilvPerSec: number;
 }

@@ -135,8 +135,8 @@ const Silv2 = () => {
             <Tbody>
               <Tr>
                 <Td>Alpha Mega D1sk</Td>
-                <Td>{Number(0.125).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
-                <Td>{Number(0.125 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+                <Td>{Number(0.124).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
+                <Td>{Number(0.124 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
               </Tr>
               <Tr>
                 <Td>Alpha Standard D1sk</Td>
@@ -145,8 +145,8 @@ const Silv2 = () => {
               </Tr>
               <Tr>
                 <Td>Mega D1sk</Td>
-                <Td>{Number(0.025).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
-                <Td>{Number(0.025 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+                <Td>{Number(0.0249).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
+                <Td>{Number(0.0249 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
               </Tr>
               <Tr>
                 <Td>Standard D1sk</Td>

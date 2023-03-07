@@ -16,27 +16,42 @@ export function usePriceProvider() {
 }
 
 export const PriceProvider = ({ children }: { children: ReactNode }) => {
-  const { ethUsdPriceFeedContract, ilvEthPriceFeedContract, quoterContract } = useContractProvider();
+  const { ethUsdPriceFeedContract, ilvEthPriceFeedContract, quoterContract, sushiswapContract, poolFactoryContract } =
+    useContractProvider();
   const [ethUsdPrice, setEthUsdPrice] = useState(0);
   const [ilvEthPrice, setIlvEthPrice] = useState(0);
   const [silv2EthPrice, setSilv2EthPrice] = useState(0);
-  // const [slpTokenPrice, setSlpTokenPrice] = useState(0);
+  const [reserveIlv, setReserveIlv] = useState(0);
+  const [reserveWeth, setReserveWeth] = useState(0);
+  const [slpTotalSupply, setSlpTotalSupply] = useState(0);
+  const [ilvPerSec, setIlvPerSec] = useState(0);
 
   useEffect(() => {
     getEthUsdPrice();
     getIlvEthPrice();
     getSilv2EthPrice();
+    getSlpInfo();
+    getIlvPerSec();
   }, []);
 
-  // const getSlpTokenPriceInUsd = async () => {
-  //   const [reserve0, reserve1] = await uniswapV2PairContract.getReserves();
-  //   const reserveSnow = Number(ethers.utils.formatEther(reserve0));
-  //   const reserveEth = Number(ethers.utils.formatEther(reserve1));
-  //   const totalSupply = Number(ethers.utils.formatEther(await readLpERC20Contract.totalSupply()));
-  //   const totalValueInLP = (reserveSnow * snowEthPriceRef.current + reserveEth) * ethUsdPriceRef.current;
-  //   const lpTokenValue = totalValueInLP / totalSupply;
-  //   setLpTokenPrice(lpTokenValue);
-  // };
+  const getIlvPerSec = async () => {
+    if (poolFactoryContract === null) return;
+    // await Promise.all()
+    const ilvPerSec = await poolFactoryContract.ilvPerSecond();
+    console.log(`ILV per sec ${ethers.utils.formatEther(ilvPerSec)}`);
+    setIlvPerSec(Number(ethers.utils.formatEther(ilvPerSec)));
+  };
+
+  const getSlpInfo = async () => {
+    if (sushiswapContract === null) return;
+    const [reserve0, reserve1] = await sushiswapContract.getReserves();
+    const reserveIlv = Number(ethers.utils.formatEther(reserve0));
+    const reserveWeth = Number(ethers.utils.formatEther(reserve1));
+    const totalSupply = Number(ethers.utils.formatEther(await sushiswapContract.totalSupply()));
+    setReserveIlv(reserveIlv);
+    setReserveWeth(reserveWeth);
+    setSlpTotalSupply(totalSupply);
+  };
 
   const getEthUsdPrice = async () => {
     if (ethUsdPriceFeedContract === null) return;
@@ -64,5 +79,11 @@ export const PriceProvider = ({ children }: { children: ReactNode }) => {
     setSilv2EthPrice(Number(ethers.utils.formatEther(quotedAmountOut)));
   };
 
-  return <PriceContext.Provider value={{ ethUsdPrice, ilvEthPrice, silv2EthPrice }}>{children}</PriceContext.Provider>;
+  return (
+    <PriceContext.Provider
+      value={{ ethUsdPrice, ilvEthPrice, silv2EthPrice, reserveIlv, reserveWeth, slpTotalSupply, ilvPerSec }}
+    >
+      {children}
+    </PriceContext.Provider>
+  );
 };

@@ -8,6 +8,8 @@ import VestingAbi from "../abis/Vesting.json";
 import SILV2Abi from "../abis/SILV2.json";
 import AggregatorV3InterfaceAbi from "../abis/AggregatorV3Interface.json";
 import Quoter from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
+import SushiswapAbi from "../abis/SushiSwap.json";
+import PoolFactoryAbi from "../abis/PoolFactory.json";
 import { IContractContext } from "@/types";
 
 const ContractContext = createContext<IContractContext | null>(null);
@@ -31,6 +33,8 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
   const ethUsdPriceFeedAddress = process.env.NEXT_PUBLIC_ETH_USD_PRICE_FEED;
   const ilvEthPriceFeedAddress = process.env.NEXT_PUBLIC_ILV_ETH_PRICE_FEED;
   const uniswapQuoterAddress = process.env.NEXT_PUBLIC_UNISWAP_QUOTER;
+  const sushiswapAddress = process.env.NEXT_PUBLIC_SLP_TOKEN;
+  const poolFactoryAddress = process.env.NEXT_PUBLIC_SC_POOL_FACTORY;
 
   let provider = useProvider();
 
@@ -94,6 +98,18 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
     signerOrProvider: provider,
   });
 
+  const sushiswapContract = useContract({
+    address: sushiswapAddress,
+    abi: SushiswapAbi,
+    signerOrProvider: provider,
+  });
+
+  const poolFactoryContract = useContract({
+    address: poolFactoryAddress,
+    abi: PoolFactoryAbi,
+    signerOrProvider: provider,
+  });
+
   return (
     <ContractContext.Provider
       value={{
@@ -106,6 +122,8 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
         ethUsdPriceFeedContract,
         ilvEthPriceFeedContract,
         quoterContract,
+        sushiswapContract,
+        poolFactoryContract,
         provider,
       }}
     >
