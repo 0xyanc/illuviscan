@@ -3,6 +3,7 @@ import { usePriceProvider } from "@/context/PriceContext";
 import { Flex, Heading, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { BigNumber, ethers } from "ethers";
 import { useEffect, useState } from "react";
+import { ImmutableX, Config } from "@imtbl/core-sdk";
 
 const Silv2 = () => {
   const { ethUsdPrice, ilvEthPrice, silv2EthPrice } = usePriceProvider();
@@ -17,6 +18,7 @@ const Silv2 = () => {
       getTotalBridged();
       getCirculatingSupply();
       getTotalBurnt();
+      getTotalEthFees();
       setIsLoaded(true);
     }
   }, []);
@@ -25,6 +27,16 @@ const Silv2 = () => {
     if (sILV2Contract === null) return;
     const bridgedSilv2 = await sILV2Contract.balanceOf(process.env.NEXT_PUBLIC_IMX_SILV2_BRIDGE);
     setBridgedSilv2(Number(ethers.utils.formatEther(bridgedSilv2)));
+  };
+  const getTotalEthFees = async () => {
+    const config = Config.PRODUCTION; // Or PRODUCTION or ROPSTEN
+    const client = new ImmutableX(config);
+    const owner: string = "0x9989818ae063f715a857925e419ba4b65b793d99";
+    const response = await client.listBalances({
+      owner,
+    });
+    console.log(response);
+    return response;
   };
   const getCirculatingSupply = async () => {
     if (sILV2Contract === null) return;

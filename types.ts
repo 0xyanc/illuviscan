@@ -54,3 +54,9 @@ export interface IPriceContext {
   slpTotalSupply: number;
   ilvPerSec: number;
 }
+
+export interface IToken {
+  symbol: string;
+  balance: string;
+  decimals: number;
+}

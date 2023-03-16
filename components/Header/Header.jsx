@@ -17,6 +17,9 @@ const Header = () => {
       <Link as={NextLink} href="/slp">
         SLP
       </Link>
+      <Link as={NextLink} href="/imx">
+        IMX
+      </Link>
     </Flex>
   );
 };
