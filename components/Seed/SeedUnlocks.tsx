@@ -78,13 +78,7 @@ const SeedUnlocks = () => {
             <Text as="b">Loading blockchain data</Text>
             <Spinner mt="1rem" color="purple" size="xl" />
           </Flex>
-        ) : (
-          !ensFetched && (
-            <Button onClick={() => fetchEns()} {...(fetchingEns && { isLoading: true })}>
-              Fetch ENS Names
-            </Button>
-          )
-        )}
+        ) : <></>}
         <Flex h="100%" w="100%">
           <TableContainer mt="1rem">
             <Table>
