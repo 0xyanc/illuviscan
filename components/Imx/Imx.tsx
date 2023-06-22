@@ -22,6 +22,7 @@ const Imx = () => {
     for (const token of response.result) {
       const address: string = token.token_address;
       let decimals = 18;
+      // retrieve number of decimals for each token
       if (address) {
         const response = await client.getToken({
           address,

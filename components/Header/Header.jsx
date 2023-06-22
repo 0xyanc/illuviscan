@@ -6,16 +6,13 @@ const Header = () => {
   return (
     <Flex h="5vh" p="2rem" justifyContent="space-around" alignItems="center">
       <Link as={NextLink} href="/">
-        March Unlocks
+        SLP
       </Link>
       <Link as={NextLink} href="/seed">
         Seed Unlocks
       </Link>
       <Link as={NextLink} href="/silv2">
         sILV2
-      </Link>
-      <Link as={NextLink} href="/slp">
-        SLP
       </Link>
       <Link as={NextLink} href="/imx">
         IMX
