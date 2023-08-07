@@ -1388,15 +1388,14 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@imtbl/core-sdk@^1.0.0", "@imtbl/core-sdk@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@imtbl/core-sdk/-/core-sdk-1.0.1.tgz#718b47209d021ab14dd758621985827dcb9fd940"
-  integrity sha512-+uwUIgnDcq2bFDY70soK/m8Grd/sZBnAvnskTxTTaKC4ppq/sy+CYu5m1XzmwSoqExbqHmXrwoLeargwFZ/EYg==
+"@imtbl/core-sdk@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@imtbl/core-sdk/-/core-sdk-2.1.0.tgz#b21202dc5ab55cfcb9a1ad302703506e1bd472f9"
+  integrity sha512-RuFaQLCi/p+fWhshcrqhNK6DWd/hTwhp/EyMAePHFxLhDAWGDbuBGKxTRLcHzYmrDcOowDavps7q8o8DqBDVVQ==
   dependencies:
     "@ethersproject/abi" "^5.0.0"
     "@ethersproject/bytes" "^5.0.0"
     "@ethersproject/providers" "^5.0.0"
-    "@imtbl/core-sdk" "^1.0.0"
     axios "^0.26.1"
     bn.js "^5.2.0"
     elliptic "^6.5.4"
