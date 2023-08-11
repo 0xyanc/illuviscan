@@ -142,6 +142,7 @@ const Silv2 = () => {
                 <Th>Disk</Th>
                 <Th isNumeric>Price in ETH</Th>
                 <Th isNumeric>Price in sILV2</Th>
+                <Th isNumeric>Price in $</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -149,21 +150,25 @@ const Silv2 = () => {
                 <Td>Alpha Mega D1sk</Td>
                 <Td>{Number(0.05401).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
                 <Td>{Number(0.05401 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+                <Td>${Number(0.05401 * ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })}</Td>
               </Tr>
               <Tr>
                 <Td>Alpha Standard D1sk</Td>
                 <Td>{Number(0.00601).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
                 <Td>{Number(0.00601 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+                <Td>${Number(0.00601 * ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })}</Td>
               </Tr>
               <Tr>
                 <Td>Mega D1sk</Td>
                 <Td>{Number(0.01801).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
                 <Td>{Number(0.01801 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+                <Td>${Number(0.01801 * ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })}</Td>
               </Tr>
               <Tr>
                 <Td>Standard D1sk</Td>
                 <Td>{Number(0.00301).toLocaleString("en-us", { maximumSignificantDigits: 4 })} ETH</Td>
                 <Td>{Number(0.00301 / ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })} sILV2</Td>
+                <Td>${Number(0.00301 * ilvEthPrice).toLocaleString("en-us", { maximumSignificantDigits: 4 })}</Td>
               </Tr>
             </Tbody>
           </Table>
