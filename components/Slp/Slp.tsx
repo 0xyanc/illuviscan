@@ -40,7 +40,7 @@ const Slp = () => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [amountToStake, setAmountToStake] = useState(0);
   const [ilvRewardOneYear, setIlvRewardOneYear] = useState(0);
-  const [ilvRewardEndOfLock, setIlvRewardEndOfLock] = useState(0);
+  const [ilvRewardEndOfReward, setIlvRewardEndOfReward] = useState(0);
 
   useEffect(() => {
     getStakedSLPInIlluvium();
@@ -80,7 +80,7 @@ const Slp = () => {
       rewardPerYear += rewardPerEpoch * 0.97 ** i;
     }
     // // recalculate the weight depending on the lock duration
-    const weight = 1 + lockValue / 365;
+    const weight = 2;
     const rewardPerYearPerShare = (rewardPerYear * 1e6) / globalSlpWeight;
 
     // for LP pool calculate APR based on USD amount
@@ -90,31 +90,41 @@ const Slp = () => {
     setSlpApr(calculatedApr);
   };
 
+  const getDaysUntilLastReward = () => {
+    // Get the current date
+    const currentDate = new Date();
+
+    // Define the future date (year, month (0-indexed), day)
+    const futureDate = new Date(2024, 5, 30); // June 30th 2024
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = futureDate.getTime() - currentDate.getTime();
+
+    // Convert milliseconds to days
+    const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    return daysDifference;
+  }
+
   const calculateReward = () => {
     // 1 epoch = 2 weeks
     // rewards decrease by 3% each epoch
     const rewardPerEpoch = ilvPerSec * 0.8 * 3600 * 24 * 14;
-    const numberOfEpochLock = Math.floor(lockValue / 14);
+    const daysUntilLastReward = getDaysUntilLastReward();
+    const numberOfEpoch = Math.floor(daysUntilLastReward / 14);
 
     let totalRewardEndOfLock = 0;
-    for (let i = 1; i <= numberOfEpochLock; i++) {
+    for (let i = 1; i <= numberOfEpoch; i++) {
       totalRewardEndOfLock += rewardPerEpoch * 0.97 ** i;
     }
-    let rewardPerYear = 0;
-    for (let i = 1; i <= 26; i++) {
-      rewardPerYear += rewardPerEpoch * 0.97 ** i;
-    }
+
     // recalculate the weight depending on the lock duration
-    const weight = 1 + lockValue / 365;
+    const weight = 2;
 
     // total reward to receive for 1 SLP staked
     const rewardEndOfLockPerShare = (totalRewardEndOfLock * weight * 1e6) / globalSlpWeight;
-    const rewardEndOfYearPerShare = (rewardPerYear * weight * 1e6) / globalSlpWeight;
 
-    const rewardToReceiveEndOfLock = rewardEndOfLockPerShare * amountToStake;
-    const rewardToReceiveEndOfYear = rewardEndOfYearPerShare * amountToStake;
-    setIlvRewardEndOfLock(rewardToReceiveEndOfLock);
-    setIlvRewardOneYear(rewardToReceiveEndOfYear);
+    const rewardToReceiveEndOfReward = rewardEndOfLockPerShare * amountToStake;
+    setIlvRewardEndOfReward(rewardToReceiveEndOfReward);
   };
 
   return (
@@ -184,7 +194,7 @@ const Slp = () => {
                     }}
                   />
                 </Flex>
-                <Flex direction="column" mt="1rem">
+                {/* <Flex direction="column" mt="1rem">
                   <Text as="b" fontSize="sm">
                     Lock duration
                   </Text>
@@ -227,9 +237,9 @@ const Slp = () => {
                       <SliderThumb />
                     </Tooltip>
                   </Slider>
-                </Flex>
+                </Flex> */}
                 <Divider mt="1rem" />
-                <Flex direction="column" mt="1rem">
+                {/* <Flex direction="column" mt="1rem">
                   <Flex alignItems="center">
                     <Text as="b" fontSize="sm">
                       SLP APR
@@ -244,31 +254,17 @@ const Slp = () => {
                   <Text>
                     {new Intl.NumberFormat("en-us", { style: "percent", maximumFractionDigits: 2 }).format(slpApr)}
                   </Text>
-                </Flex>
+                </Flex> */}
                 <Flex direction="column">
                   <Flex alignItems="center">
                     <Text as="b" fontSize="sm">
-                      ILV reward after end of lock period
+                      ILV reward at the end of the reward period
                     </Text>
-                    <Tooltip label="The amount of ILV reward earned during the lock period" fontSize="xs">
+                    <Tooltip label="The amount of ILV reward earned until the end of the reward period, assuming a weigth of 2" fontSize="xs">
                       <InfoOutlineIcon ml="0.5rem" />
                     </Tooltip>
                   </Flex>
-                  <Text>{ilvRewardEndOfLock.toLocaleString("en-us", { maximumFractionDigits: 3 })} ILV</Text>
-                </Flex>
-                <Flex direction="column">
-                  <Flex alignItems="center">
-                    <Text as="b" fontSize="sm">
-                      ILV reward after 1 year
-                    </Text>
-                    <Tooltip
-                      label="The amount of ILV reward after 1 year of staking (i.e. no withdrawal at the end of lock period)"
-                      fontSize="xs"
-                    >
-                      <InfoOutlineIcon ml="0.5rem" />
-                    </Tooltip>
-                  </Flex>
-                  <Text>{ilvRewardOneYear.toLocaleString("en-us", { maximumFractionDigits: 3 })} ILV</Text>
+                  <Text>{ilvRewardEndOfReward.toLocaleString("en-us", { maximumFractionDigits: 3 })} ILV</Text>
                 </Flex>
               </Flex>
             </Box>
