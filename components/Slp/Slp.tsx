@@ -260,7 +260,7 @@ const Slp = () => {
                     <Text as="b" fontSize="sm">
                       ILV reward at the end of the reward period
                     </Text>
-                    <Tooltip label="The amount of ILV reward earned until the end of the reward period, assuming a weigth of 2" fontSize="xs">
+                    <Tooltip label="The amount of ILV reward earned until the end of the reward period, assuming a weight of 2" fontSize="xs">
                       <InfoOutlineIcon ml="0.5rem" />
                     </Tooltip>
                   </Flex>
