@@ -87,9 +87,11 @@ const SeedUnlocks = () => {
                   <Th>Address</Th>
                   <Th isNumeric>Total Amount</Th>
                   <Th isNumeric>Already Unlocked</Th>
-                  <Th isNumeric>% Unlocked</Th>
+                  {/* <Th isNumeric>% Unlocked</Th> */}
                   <Th isNumeric>Available to Unlock</Th>
-                  <Th isNumeric>% Unlockable</Th>
+                  <Th>Start Vesting</Th>
+                  <Th>End Vesting</Th>
+                  {/* <Th isNumeric>% Unlockable</Th> */}
                   <Th>Comment</Th>
                 </Tr>
               </Thead>
@@ -106,16 +108,22 @@ const SeedUnlocks = () => {
                         </Td>
                         <Td>{unlock.totalAmount.toLocaleString("en-us", { maximumFractionDigits: 0 })}</Td>
                         <Td>{unlock.unlocked.toLocaleString("en-us", { maximumFractionDigits: 0 })}</Td>
-                        <Td>
+                        {/* <Td>
                           {new Intl.NumberFormat("en-us", { style: "percent" }).format(
                             unlock.unlocked / unlock.totalAmount
                           )}
-                        </Td>
+                        </Td> */}
                         <Td>{Number(unlock.available).toLocaleString("en-us", { maximumFractionDigits: 0 })}</Td>
-                        <Td>
+                        {/* <Td>
                           {new Intl.NumberFormat("en-us", { style: "percent" }).format(
                             (unlock.available + unlock.unlocked) / unlock.totalAmount
                           )}
+                        </Td> */}
+                        <Td>
+                          { unlock.startDate }
+                        </Td>
+                        <Td>
+                          { unlock.endDate }
                         </Td>
                         <Td>
                           {

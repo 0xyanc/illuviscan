@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { useContractProvider } from "./ContractContext";
 import { BigNumber, ethers } from "ethers";
 import { ISeedContext, ISeedUnlocks } from "@/types";
+import moment from 'moment';
 
 const SeedContext = createContext<ISeedContext | null>(null);
 
@@ -20,6 +21,8 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
   const [totalSeedTokens, setTotalSeedTokens] = useState(0);
   const [totalUnlocked, setTotalUnlocked] = useState(0);
   const [totalAvailable, setTotalAvailable] = useState(0);
+  const [startDate, setStartDate] = useState(0);
+  const [endDate, setEndDate] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -52,12 +55,19 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
         totalSeedTokens = totalSeedTokens.add(totalAmount);
         totalAvailable = totalAvailable.add(availableUnderlyingFor);
         const duration = position.end.sub(position.start);
+        const start = new Date(position.start * 1000);
+        const end = new Date(position.end * 1000);
+
+        // moment(yourDate)).format('DD-MMM-YYYY
+
         unlocksByAccount.push({
           address: owner,
           ens: "",
           totalAmount: Number(ethers.utils.formatEther(totalAmount)),
           unlocked: Number(ethers.utils.formatEther(unlocked)),
           available: Number(ethers.utils.formatEther(availableUnderlyingFor)),
+          startDate: (moment(new Date(position.start * 1000))).format('DD-MMM-YYYY'),
+          endDate: (moment(new Date(position.end * 1000))).format('DD-MMM-YYYY'),
           duration: duration,
         });
         unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);

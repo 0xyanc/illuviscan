@@ -23,6 +23,8 @@ export interface ISeedUnlocks {
   totalAmount: number;
   unlocked: number;
   available: number;
+  startDate: string;
+  endDate: string;
   duration: BigNumber;
 }
 
