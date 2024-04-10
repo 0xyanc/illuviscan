@@ -55,30 +55,31 @@ export const SeedProvider = ({ children }: { children: ReactNode }) => {
         totalSeedTokens = totalSeedTokens.add(totalAmount);
         totalAvailable = totalAvailable.add(availableUnderlyingFor);
         const duration = position.end.sub(position.start);
-        const start = new Date(position.start * 1000);
-        const end = new Date(position.end * 1000);
+        const _unlocked = Number(ethers.utils.formatEther(unlocked));
+        const _totalAmount = Number(ethers.utils.formatEther(totalAmount));
 
-        // moment(yourDate)).format('DD-MMM-YYYY
-
-        unlocksByAccount.push({
-          address: owner,
-          ens: "",
-          totalAmount: Number(ethers.utils.formatEther(totalAmount)),
-          unlocked: Number(ethers.utils.formatEther(unlocked)),
-          available: Number(ethers.utils.formatEther(availableUnderlyingFor)),
-          startDate: (moment(new Date(position.start * 1000))).format('DD-MMM-YYYY'),
-          endDate: (moment(new Date(position.end * 1000))).format('DD-MMM-YYYY'),
-          duration: duration,
-        });
-        unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);
-        setTotalUnlocked(Number(ethers.utils.formatEther(totalUnlocked)));
-        setTotalSeedTokens(Number(ethers.utils.formatEther(totalSeedTokens)));
-        setTotalAvailable(Number(ethers.utils.formatEther(totalAvailable)));
-        setUnlocksByAddress(unlocksByAccount);
+        if (_unlocked < _totalAmount) {
+          unlocksByAccount.push({
+            address: owner,
+            ens: "",
+            totalAmount: _totalAmount,
+            unlocked: _unlocked,
+            available: Number(ethers.utils.formatEther(availableUnderlyingFor)),
+            startDate: (moment(new Date(position.start * 1000))).format('DD-MMM-YYYY'),
+            endDate: (moment(new Date(position.end * 1000))).format('DD-MMM-YYYY'),
+            duration: duration,
+          });
+          setTotalUnlocked(Number(ethers.utils.formatEther(totalUnlocked)));
+          setTotalSeedTokens(Number(ethers.utils.formatEther(totalSeedTokens)));
+          setTotalAvailable(Number(ethers.utils.formatEther(totalAvailable)));
+          setUnlocksByAddress(unlocksByAccount);
+        }
       } catch (e) {
         console.debug(`Skip Vesting position ${i}`);
       }
     }
+    unlocksByAccount.sort((a, b) => b.totalAmount - a.totalAmount);
+    setUnlocksByAddress(unlocksByAccount);
     setIsLoaded(true);
   };
 
